@@ -1,4 +1,3 @@
-import './App.css';
 import HomePage from './components/homePage/HomePage';
 import TopBar from './components/topBar/TopBar';
 

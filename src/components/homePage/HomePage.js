@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import chatBotLogo from "../assets/chatBotLogo.png";
 import CardComponent from "../cardComponent/CardComponent";
+import SearchComponent from "../searchComponent/SearchComponent";
 
 const HomePage = () => {
   return (
@@ -28,16 +29,23 @@ const HomePage = () => {
 
       {/* content of the application */}
       <Box>
-        <Box sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems:"center",
-          justifyContent:"center",
-          gap: "15px",
-          mt: "4%",
-          mb: "2%",
-        }}>
-          <Typography variant="h3" sx={{ fontSize: {xs:"20px",md:"28px"}, fontWeight: {xs:"300", sm:"500"} }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "15px",
+            mt: "3.2%",
+          }}
+        >
+          <Typography
+            variant="h3"
+            sx={{
+              fontSize: { xs: "20px", md: "28px" },
+              fontWeight: { xs: "300", sm: "500" },
+            }}
+          >
             How Can I Help You Today?
           </Typography>
           <img
@@ -48,9 +56,14 @@ const HomePage = () => {
             width={60}
           />
         </Box>
+
+        {/* cards to display customized sample questions on home page */}
         <Box>
-            <CardComponent/>
+          <CardComponent />
         </Box>
+
+        {/* search box with save and ask button */}
+        <SearchComponent/>
       </Box>
     </Box>
   );

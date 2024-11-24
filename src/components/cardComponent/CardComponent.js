@@ -1,14 +1,14 @@
 import {
-  Box,
   Card,
   CardContent,
-  CardMedia,
   Grid,
   Typography,
 } from "@mui/material";
 import React from "react";
 
 const CardComponent = () => {
+
+  //some sample questions to display on the start of the web page
   const customizedSampleQuestions = [
     {
       id: 1,
