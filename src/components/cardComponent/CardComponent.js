@@ -32,12 +32,27 @@ const CardComponent = () => {
     },
   ];
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ padding: "20px" }}>
       {customizedSampleQuestions.map((item) => (
-        <Grid item key={item.id}>
-          <Card>
+        <Grid item key={item.id} xs={12} sm={12} md={6}>
+          <Card
+            sx={{
+              borderRadius: "5px",
+              display: "flex",
+              textAlign: "left",
+              pb: "20px",
+              boxShadow: 2,
+              "&:hover": { boxShadow: 4 },
+              cursor:"pointer"
+            }}
+          >
             <CardContent>
-              <Typography>{item.title}</Typography>
+              <Typography sx={{ fontSize: "20px", fontWeight: "700" }}>
+                {item.title}
+              </Typography>
+              <Typography variant="p" sx={{ color: "#00000080" }}>
+                {item.subTitle}
+              </Typography>
             </CardContent>
           </Card>
         </Grid>

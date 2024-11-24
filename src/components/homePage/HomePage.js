@@ -34,8 +34,8 @@ const HomePage = () => {
           alignItems:"center",
           justifyContent:"center",
           gap: "15px",
-          mt: "6%",
-          mb: "4%",
+          mt: "4%",
+          mb: "2%",
         }}>
           <Typography variant="h3" sx={{ fontSize: {xs:"20px",md:"28px"}, fontWeight: {xs:"300", sm:"500"} }}>
             How Can I Help You Today?
