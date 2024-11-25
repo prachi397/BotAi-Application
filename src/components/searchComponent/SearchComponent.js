@@ -3,32 +3,14 @@ import React, { useEffect, useState } from "react";
 import UserChat from "./UserChat";
 
 const SearchComponent = (props) => {
-  const [updatedChatList, setUpdatedChatList] = useState([]);
-
-  useEffect(() => {
-    if (props?.chatList?.length > 0) {
-      setUpdatedChatList(
-        props?.chatList.map((chat) => ({
-          ...chat,
-          like: false,
-          dislike: false,
-        }))
-      );
-    }
-  }, [props?.chatList]);
-
-  //fucntion to save the chats in local storage
-  function handleChatSave(updatedChatList){
-    localStorage.setItem("Saved Chats",JSON.stringify(updatedChatList));
-  }
 
   return (
     <Box>
       {/* chats of the user */}
       <UserChat
-        chatList={props.chatList}
-        updatedChatList={updatedChatList}
-        setUpdatedChatList={setUpdatedChatList}
+        chatList={props?.chatList}
+        updatedChatList={props?.updatedChatList}
+        setUpdatedChatList={props?.setUpdatedChatList}
       />
       {/* search functionality */}
       <Box
@@ -74,7 +56,7 @@ const SearchComponent = (props) => {
             textTransform: "none",
             fontSize: "17px",
           }}
-          onClick={()=>handleChatSave(updatedChatList)}
+          onClick={props.handleChatSave}
         >
           Save
         </Button>

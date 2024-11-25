@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import chatBotLogo from "../../assets/chatBotLogo.png";
 import CardComponent from "../cardComponent/CardComponent";
 import SearchComponent from "../searchComponent/SearchComponent";
@@ -10,6 +10,23 @@ const HomePage = () => {
   const [answer, setAnswer] = useState();
   const [askBtnClicked, setAskBtnClick] = useState(false);
   const [chatList, setChatList] = useState([]);
+
+  //chatlist having like and dislike flag
+  const [updatedChatList, setUpdatedChatList] = useState([]);
+
+  //update the chatlist with like and dislike flag initially as false
+  useEffect(() => {
+    if (chatList?.length > 0) {
+      setUpdatedChatList(
+        chatList.map((chat) => ({
+          ...chat,
+          like: false,
+          dislike: false,
+        }))
+      );
+    }
+  }, [chatList]);
+
 
   function handleUserTyping(e) {
     setQuestion(e.target.value);
@@ -72,6 +89,11 @@ const HomePage = () => {
     } else {
       setAskBtnClick(false);
     }
+  }
+
+   //fucntion to save the chats in local storage
+   function handleChatSave(){
+    localStorage.setItem("Saved Chats",JSON.stringify(updatedChatList));
   }
 
   return (
@@ -141,8 +163,11 @@ const HomePage = () => {
           question={question}
           answer={answer}
           chatList={chatList}
+          updatedChatList={updatedChatList}
+          setUpdatedChatList={setUpdatedChatList}
           handleUserTyping={handleUserTyping}
           handleAskQuestion={handleAskQuestion}
+          handleChatSave={handleChatSave}
         />
       </Box>
     </Box>
