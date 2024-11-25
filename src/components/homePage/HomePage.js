@@ -10,6 +10,7 @@ const HomePage = () => {
       sx={{
         background:
           "linear-gradient(180deg, rgba(215, 199, 244, 0.2) 0%, rgba(151, 133, 186, 0.2) 100%)",
+          width:"85%"
       }}
     >
       {/* title of the application */}
