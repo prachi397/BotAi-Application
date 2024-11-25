@@ -4,12 +4,14 @@ import chatBotLogo from "../../assets/chatBotLogo.png";
 import CardComponent from "../cardComponent/CardComponent";
 import SearchComponent from "../searchComponent/SearchComponent";
 import sampleData from "../sampleData/sampleData.json";
+import SideBar from "../sideBar/SideBar";
 
 const HomePage = () => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState();
   const [askBtnClicked, setAskBtnClick] = useState(false);
   const [chatList, setChatList] = useState([]);
+  const [addNewChatClicked, setAddNewChatClicked] = useState(false);
 
   //chatlist having like and dislike flag
   const [updatedChatList, setUpdatedChatList] = useState([]);
@@ -27,7 +29,6 @@ const HomePage = () => {
     }
   }, [chatList]);
 
-
   function handleUserTyping(e) {
     setQuestion(e.target.value);
   }
@@ -38,7 +39,7 @@ const HomePage = () => {
     let hours = date.getHours();
     const minutes = date.getMinutes();
     const isAm = hours < 12;
-    hours = hours % 12 || 12; 
+    hours = hours % 12 || 12;
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const amPm = isAm ? "AM" : "PM";
     return `${hours}:${formattedMinutes} ${amPm}`;
@@ -70,19 +71,19 @@ const HomePage = () => {
       );
 
       // Set the answer based on the best match if it has a score greater than 0
-      let response
+      let response;
       if (bestMatch.score > 0) {
         response = bestMatch.response;
       } else {
-        response = 
+        response =
           "As an AI model, I don't have access to this detail. How can I assist you further?";
       }
 
       const askedTime = getCurrentTime();
       //update the chat list
-      setChatList((prevChat)=>[
+      setChatList((prevChat) => [
         ...prevChat,
-        {question:question, answer:response, time: askedTime}
+        { question: question, answer: response, time: askedTime },
       ]);
       setAnswer(response);
       setQuestion("");
@@ -91,84 +92,95 @@ const HomePage = () => {
     }
   }
 
-   //fucntion to save the chats in local storage
-   function handleChatSave(){
-    localStorage.setItem("Saved Chats",JSON.stringify(updatedChatList));
+  //fucntion to save the chats in local storage
+  function handleChatSave() {
+    localStorage.setItem("Saved Chats", JSON.stringify(updatedChatList));
+  }
+
+  //function to start new chat when click on pencil icon
+  function handleAddNewChat() {
+    setAddNewChatClicked(true);
+    setAskBtnClick(false);
+    setChatList([]);
+    setUpdatedChatList([]);
   }
 
   return (
-    <Box
-      sx={{
-        background:
-          "linear-gradient(180deg, rgba(215, 199, 244, 0.2) 0%, rgba(151, 133, 186, 0.2) 100%)",
-        width: { xs: "100%", sm: "85%", md: "85%" },
-      }}
-    >
-      {/* title of the application */}
-      <Typography
-        variant="h3"
+    <Box sx={{ display: "flex" }}>
+      <SideBar handleAddNewChat={handleAddNewChat} />
+      <Box
         sx={{
-          color: "#9785BA",
-          fontSize: "28px",
-          fontWeight: "700",
-          textAlign: "left",
-          pl: "30px",
-          pt: "10px",
+          background:
+            "linear-gradient(180deg, rgba(215, 199, 244, 0.2) 0%, rgba(151, 133, 186, 0.2) 100%)",
+          width: { xs: "100%", sm: "85%", md: "85%" },
         }}
       >
-        Bot AI
-      </Typography>
+        {/* title of the application */}
+        <Typography
+          variant="h3"
+          sx={{
+            color: "#9785BA",
+            fontSize: "28px",
+            fontWeight: "700",
+            textAlign: "left",
+            pl: "30px",
+            pt: "10px",
+          }}
+        >
+          Bot AI
+        </Typography>
 
-      {/* content of the application */}
-      <Box>
-        {!askBtnClicked && (
-          <>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "15px",
-                mt: "3.2%",
-              }}
-            >
-              <Typography
-                variant="h3"
+        {/* content of the application */}
+        <Box>
+          {!askBtnClicked && (
+            <>
+              <Box
                 sx={{
-                  fontSize: { xs: "20px", md: "28px" },
-                  fontWeight: { xs: "300", sm: "500" },
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "15px",
+                  mt: "3.2%",
                 }}
               >
-                How Can I Help You Today?
-              </Typography>
-              <img
-                style={{ borderRadius: "50%" }}
-                src={chatBotLogo}
-                alt="chat bot logo"
-                height={60}
-                width={60}
-              />
-            </Box>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontSize: { xs: "20px", md: "28px" },
+                    fontWeight: { xs: "300", sm: "500" },
+                  }}
+                >
+                  How Can I Help You Today?
+                </Typography>
+                <img
+                  style={{ borderRadius: "50%" }}
+                  src={chatBotLogo}
+                  alt="chat bot logo"
+                  height={60}
+                  width={60}
+                />
+              </Box>
 
-            {/* cards to display customized sample questions on home page */}
-            <Box>
-              <CardComponent />
-            </Box>
-          </>
-        )}
+              {/* cards to display customized sample questions on home page */}
+              <Box>
+                <CardComponent />
+              </Box>
+            </>
+          )}
 
-        {/* search box with save and ask button */}
-        <SearchComponent
-          question={question}
-          answer={answer}
-          chatList={chatList}
-          updatedChatList={updatedChatList}
-          setUpdatedChatList={setUpdatedChatList}
-          handleUserTyping={handleUserTyping}
-          handleAskQuestion={handleAskQuestion}
-          handleChatSave={handleChatSave}
-        />
+          {/* search box with save and ask button */}
+          <SearchComponent
+            question={question}
+            answer={answer}
+            chatList={chatList}
+            updatedChatList={updatedChatList}
+            setUpdatedChatList={setUpdatedChatList}
+            handleUserTyping={handleUserTyping}
+            handleAskQuestion={handleAskQuestion}
+            handleChatSave={handleChatSave}
+          />
+        </Box>
       </Box>
     </Box>
   );
