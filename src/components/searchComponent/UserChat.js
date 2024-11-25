@@ -12,28 +12,30 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 
 const UserChat = ({ chatList }) => {
-    const [like, setLike] = useState(false);
-  const [dislike, setDislike] = useState(false);
+    const [updatedChatList, setUpdatedChatList] = useState(
+        chatList.map((chat) => ({ ...chat, like: false, dislike: false }))
+      );
+    
+      const handleLike = (index) => {
+        setUpdatedChatList((prevChatList) =>
+          prevChatList.map((chat, idx) =>
+            idx === index
+              ? { ...chat, like: !chat.like, dislike: false } // Toggle like and reset dislike
+              : chat
+          )
+        );
+      };
+    
+      const handleDislike = (index) => {
+        setUpdatedChatList((prevChatList) =>
+          prevChatList.map((chat, idx) =>
+            idx === index
+              ? { ...chat, dislike: !chat.dislike, like: false } // Toggle dislike and reset like
+              : chat
+          )
+        );
+      };
 
-  //function to like the chat
-  const handleLike = () => {
-    if (like) {
-      setLike(false); 
-    } else {
-      setLike(true); 
-      setDislike(false); 
-    }
-  };
-
-   //function to dislike the chat
-   const handleDisLike = () => {
-    if (dislike) {
-      setDislike(false); 
-    } else {
-      setDislike(true); 
-      setLike(false); 
-    }
-  };
   return (
     <Box
       sx={{
@@ -43,8 +45,8 @@ const UserChat = ({ chatList }) => {
         gap: "20px",
       }}
     >
-      {chatList?.length &&
-        chatList?.map((ele, idx) => (
+      {updatedChatList?.length &&
+        updatedChatList?.map((ele, idx) => (
           <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             {/* card1 to display question */}
             <Card
@@ -126,12 +128,12 @@ const UserChat = ({ chatList }) => {
                   <span>{ele.time}</span>
                   <Box>
                     {/* like icon */}
-                    <IconButton aria-label="like"  onClick={handleLike}>
-                      <ThumbUpIcon sx={{ height: "17px", width: "17px" }} />
+                    <IconButton aria-label="like"  onClick={()=>handleLike(idx)}>
+                      <ThumbUpIcon sx={{ height: "17px", width: "17px", color:ele.like ? "#deab2c":'' }} />
                     </IconButton>
                     {/* dislike icon */}
-                    <IconButton aria-label="like" onClick={handleDisLike}>
-                      <ThumbDownIcon sx={{ height: "17px", width: "17px" }} />
+                    <IconButton aria-label="like" onClick={()=>handleDislike(idx)}>
+                      <ThumbDownIcon sx={{ height: "17px", width: "17px",color:ele.dislike ? "#deab2c":'' }} />
                     </IconButton>
                   </Box>
                 </Typography>
