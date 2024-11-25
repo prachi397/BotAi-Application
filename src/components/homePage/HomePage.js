@@ -1,16 +1,56 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import chatBotLogo from "../assets/chatBotLogo.png";
 import CardComponent from "../cardComponent/CardComponent";
 import SearchComponent from "../searchComponent/SearchComponent";
+import sampleData from "../sampleData/sampleData.json";
 
 const HomePage = () => {
+  const [question, setQuestion] = useState("");
+
+  function handleUserTyping(e) {
+    setQuestion(e.target.value);
+  }
+
+  const [answer, setAnswer] = useState("");
+  //function to ask question
+  function handleAskQuestion() {
+    const scores = sampleData.map((item) => {
+      // Split both user question and sample question into words
+      const userWords = new Set(question.toLowerCase().split(/\s+/)); // Convert to a set for unique words
+      const sampleWords = new Set(item.question.toLowerCase().split(/\s+/));
+
+      // Count the number of matching words
+      const matchCount = [...userWords].filter((word) =>
+        sampleWords.has(word)
+      ).length;
+
+      return {
+        ...item,
+        score: matchCount, // Higher score means a better match
+      };
+    });
+
+    // Find the question with the highest score
+    const bestMatch = scores.reduce((prev, curr) =>
+      curr.score > prev.score ? curr : prev
+    );
+
+    // Set the answer based on the best match if it has a score greater than 0
+    if (bestMatch.score > 0) {
+      setAnswer(bestMatch.response);
+    } else {
+      setAnswer(
+        "As an AI model, I don't have access to this detail. How can I assist you further?"
+      );
+    }
+  }
   return (
     <Box
       sx={{
         background:
           "linear-gradient(180deg, rgba(215, 199, 244, 0.2) 0%, rgba(151, 133, 186, 0.2) 100%)",
-          width:"85%"
+        width: { xs: "100%", sm: "85%", md: "85%" },
       }}
     >
       {/* title of the application */}
@@ -64,7 +104,12 @@ const HomePage = () => {
         </Box>
 
         {/* search box with save and ask button */}
-        <SearchComponent/>
+        <SearchComponent
+          question={question}
+          answer={answer}
+          handleUserTyping={handleUserTyping}
+          handleAskQuestion={handleAskQuestion}
+        />
       </Box>
     </Box>
   );

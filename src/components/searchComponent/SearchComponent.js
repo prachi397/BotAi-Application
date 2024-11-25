@@ -1,7 +1,8 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
-const SearchComponent = () => {
+const SearchComponent = (props) => {
+  
   return (
     <Box
       sx={{
@@ -12,9 +13,12 @@ const SearchComponent = () => {
         alignItems: "center",
       }}
     >
+      <Typography>{props.answer}</Typography>
       <TextField
         variant="outlined"
         size="small"
+        value={props.question}
+        onChange={props.handleUserTyping}
         sx={{
           background: "#FFFFFF",
           border: "1px solid #00000073",
@@ -31,6 +35,7 @@ const SearchComponent = () => {
           textTransform: "none",
           fontSize: "17px",
         }}
+        onClick={props.handleAskQuestion}
       >
         Ask
       </Button>
