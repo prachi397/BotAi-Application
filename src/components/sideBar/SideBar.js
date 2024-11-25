@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Box, Typography, Drawer, IconButton, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu"; // Breadcrumb menu icon
-import chatBotLogo from "../assets/chatBotLogo.png";
-import editImage from "../assets/editImage.png";
+import chatBotLogo from "../../assets/chatBotLogo.png";
+import editImage from "../../assets/editImage.png";
 
 const SideBar = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);

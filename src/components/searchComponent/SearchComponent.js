@@ -1,9 +1,14 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import UserChat from "./UserChat";
 
 const SearchComponent = (props) => {
   
   return (
+    <Box>
+      {/* chats of the user */}
+      <UserChat chatList = {props.chatList}/>
+      {/* search functionality */}
     <Box
       sx={{
         padding: "20px",
@@ -13,7 +18,6 @@ const SearchComponent = (props) => {
         alignItems: "center",
       }}
     >
-      <Typography>{props.answer}</Typography>
       <TextField
         variant="outlined"
         size="small"
@@ -51,6 +55,7 @@ const SearchComponent = (props) => {
       >
         Save
       </Button>
+    </Box>
     </Box>
   );
 };
