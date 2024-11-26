@@ -6,12 +6,16 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import userProfile from "../../assets/userProfile.png";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import PopUpModal from "../popUpModal/PopUpModal";
 
 const UserChat = ({ updatedChatList, setUpdatedChatList }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [feedback, setFeedback] = useState("");
+
   const handleLike = (index) => {
     setUpdatedChatList((prevChatList) =>
       prevChatList.map((chat, idx) =>
@@ -30,7 +34,24 @@ const UserChat = ({ updatedChatList, setUpdatedChatList }) => {
           : chat
       )
     );
+    setIsOpen(true);
   };
+
+  function handleClose() {
+    setIsOpen(false);
+  }
+
+  function handleSubmit(index) {
+    if(feedback.length>0){
+      setUpdatedChatList((prevChatList) =>
+        prevChatList.map((chat, idx) =>
+          idx === index ? { ...chat, additionalFeedback: feedback } : chat
+        )
+      );
+      setFeedback("");
+      setIsOpen(false);
+    }
+  }
 
   return (
     <>
@@ -152,6 +173,15 @@ const UserChat = ({ updatedChatList, setUpdatedChatList }) => {
                             }}
                           />
                         </IconButton>
+                        {ele.dislike && (
+                          <PopUpModal
+                            isOpen={isOpen}
+                            handleClose={handleClose}
+                            handleSubmit={() => handleSubmit(idx)}
+                            feedback={feedback}
+                            setFeedback={setFeedback}
+                          />
+                        )}
                       </Box>
                     </Typography>
                   </CardContent>

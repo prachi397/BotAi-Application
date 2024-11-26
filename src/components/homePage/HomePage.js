@@ -17,7 +17,7 @@ const HomePage = ({
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState();
 
-  //update the chatlist with like and dislike flag initially as false
+  //update the chatlist with like, dislike flag and additional feedback initially as false
   useEffect(() => {
     if (chatList?.length > 0) {
       setUpdatedChatList(
@@ -25,6 +25,7 @@ const HomePage = ({
           ...chat,
           like: false,
           dislike: false,
+          additionalFeedback: ''
         }))
       );
     }

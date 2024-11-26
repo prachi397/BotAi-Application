@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import UserChat from "./UserChat";
 
 const SearchComponent = (props) => {
