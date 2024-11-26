@@ -25,7 +25,8 @@ const HomePage = ({
           ...chat,
           like: false,
           dislike: false,
-          additionalFeedback: ''
+          additionalFeedback: '',
+          starRating: 0
         }))
       );
     }

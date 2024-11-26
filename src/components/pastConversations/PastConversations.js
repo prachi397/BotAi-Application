@@ -2,6 +2,7 @@ import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import React from "react";
 import userProfile from "../../assets/userProfile.png";
 import botAiLogo from "../../assets/chatBotLogo.png";
+import StarRating from "../starRating/StarRating";
 
 const PastConversation = () => {
   const pastConversations = JSON.parse(
@@ -76,6 +77,7 @@ const PastConversation = () => {
                           <span> {chat.answer}</span>
                         </Typography>
                       </Box>
+                      <StarRating rating={chat.starRating} readOnly/>
                       <Typography
                         sx={{
                           fontSize: "12px",
