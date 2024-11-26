@@ -33,17 +33,28 @@ const HomePage = () => {
     setQuestion(e.target.value);
   }
 
-  // Get the current time in the desired format
+  // Get the current time and date
   const getCurrentTime = () => {
     const date = new Date();
+    // Get hours and minutes
     let hours = date.getHours();
     const minutes = date.getMinutes();
     const isAm = hours < 12;
     hours = hours % 12 || 12;
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const amPm = isAm ? "AM" : "PM";
-    return `${hours}:${formattedMinutes} ${amPm}`;
+    // Get date in dd/mm/yyyy format
+    const day = String(date.getDate()).padStart(2, '0'); 
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    const year = date.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+  
+    return {
+      time: `${hours}:${formattedMinutes} ${amPm}`,
+      date: formattedDate,
+    };
   };
+  
 
   //function to ask question
   function handleAskQuestion() {
@@ -79,11 +90,11 @@ const HomePage = () => {
           "As an AI model, I don't have access to this detail. How can I assist you further?";
       }
 
-      const askedTime = getCurrentTime();
+      const { time: askedTime, date: askedDate } = getCurrentTime();
       //update the chat list
       setChatList((prevChat) => [
         ...prevChat,
-        { question: question, answer: response, time: askedTime },
+        { question: question, answer: response, time: askedTime, date: askedDate },
       ]);
       setAnswer(response);
       setQuestion("");
