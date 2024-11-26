@@ -110,7 +110,18 @@ const HomePage = ({
 
   //fucntion to save the chats in local storage
   function handleChatSave() {
-    localStorage.setItem("Saved Chats", JSON.stringify(updatedChatList));
+    // Retrieve the existing saved chats from localStorage
+    const existingChats = JSON.parse(
+      localStorage.getItem("Saved Chats") || "[]"
+    );
+    // Create a new group for the current chat session
+    const newChatGroup = {
+      id: Date.now(), // Unique ID for the group (timestamp)
+      chats: [...updatedChatList], // Store the updated chat list in this group
+    };
+    // Append the new group to the existing groups
+    const updatedGroups = [...existingChats, newChatGroup];
+    localStorage.setItem("Saved Chats", JSON.stringify(updatedGroups));
   }
 
   return (
