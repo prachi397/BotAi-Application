@@ -138,6 +138,12 @@ const UserChat = ({ updatedChatList, setUpdatedChatList, onChangeRating }) => {
                     display: "flex",
                     alignItems: "center",
                     pl: "20px",
+                    "&:hover .hover-buttons": {
+                      display: "block",
+                    },
+                    "&:hover .hover-star-rating": {
+                      display: ele.like ? "block" : "none",
+                    },
                   }}
                 >
                   <CardMedia>
@@ -168,7 +174,7 @@ const UserChat = ({ updatedChatList, setUpdatedChatList, onChangeRating }) => {
                       }}
                     >
                       <span>{ele.time}</span>
-                      <Box>
+                      <Box className="hover-buttons" sx={{ display: "none" }}>
                         {/* like icon */}
                         <IconButton
                           aria-label="like"
@@ -206,14 +212,22 @@ const UserChat = ({ updatedChatList, setUpdatedChatList, onChangeRating }) => {
                         )}
                       </Box>
                     </Typography>
-                    {starRatings && ele.like && (
-                      <StarRating
-                        rating={ele.starRating || 0}
-                        handleChange={(event, newValue) =>
-                          handleChange(event, newValue, idx)
-                        }
-                      />
-                    )}
+                    {/* star ratings */}
+                    <Box
+                      className="hover-star-rating"
+                      sx={{
+                        display: "none",
+                      }}
+                    >
+                      {starRatings && ele.like && (
+                        <StarRating
+                          rating={ele.starRating || 0}
+                          handleChange={(event, newValue) =>
+                            handleChange(event, newValue, idx)
+                          }
+                        />
+                      )}
+                    </Box>
                   </CardContent>
                 </Card>{" "}
               </Box>
