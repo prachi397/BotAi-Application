@@ -11,10 +11,15 @@ import userProfile from "../../assets/userProfile.png";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import PopUpModal from "../popUpModal/PopUpModal";
+import { useSnackbar } from "notistack";
+import StarRating from "../starRating/StarRating";
 
-const UserChat = ({ updatedChatList, setUpdatedChatList }) => {
+const UserChat = ({ updatedChatList, setUpdatedChatList, onChangeRating }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [feedback, setFeedback] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
+  const [starRatings, setStarRatings] = useState(false);
+  const [rating, setRating] = useState(0);
 
   const handleLike = (index) => {
     setUpdatedChatList((prevChatList) =>
@@ -24,6 +29,7 @@ const UserChat = ({ updatedChatList, setUpdatedChatList }) => {
           : chat
       )
     );
+    setStarRatings(true);
   };
 
   const handleDislike = (index) => {
@@ -42,7 +48,7 @@ const UserChat = ({ updatedChatList, setUpdatedChatList }) => {
   }
 
   function handleSubmit(index) {
-    if(feedback.length>0){
+    if (feedback.length > 0) {
       setUpdatedChatList((prevChatList) =>
         prevChatList.map((chat, idx) =>
           idx === index ? { ...chat, additionalFeedback: feedback } : chat
@@ -50,8 +56,24 @@ const UserChat = ({ updatedChatList, setUpdatedChatList }) => {
       );
       setFeedback("");
       setIsOpen(false);
+    } else {
+      enqueueSnackbar("Please enter feedback", {
+        variant: "warning",
+      });
     }
   }
+
+  const handleChange = (event, newValue, index) => {
+    setRating(newValue);
+    if (onChangeRating) {
+      onChangeRating(newValue);
+    }
+    setUpdatedChatList((prevChatList) =>
+      prevChatList.map((chat, idx) =>
+        idx === index ? { ...chat, starRating: rating } : chat
+      )
+    );
+  };
 
   return (
     <>
@@ -184,6 +206,14 @@ const UserChat = ({ updatedChatList, setUpdatedChatList }) => {
                         )}
                       </Box>
                     </Typography>
+                    {starRatings && ele.like && (
+                      <StarRating
+                        rating={ele.starRating || 0}
+                        handleChange={(event, newValue) =>
+                          handleChange(event, newValue, idx)
+                        }
+                      />
+                    )}
                   </CardContent>
                 </Card>{" "}
               </Box>

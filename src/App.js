@@ -4,6 +4,7 @@ import TopBar from "./components/topBar/TopBar";
 import PastConversation from "./components/pastConversations/PastConversations";
 import Layout from "./components/layout/Layout";
 import { useState } from "react";
+import { SnackbarProvider } from "notistack";
 
 // Wrapper component to use `useNavigate`
 const AppWithNavigation = () => {
@@ -51,9 +52,11 @@ const AppWithNavigation = () => {
 
 function App() {
   return (
+    <SnackbarProvider maxSnack={3}>
     <BrowserRouter>
       <AppWithNavigation /> 
     </BrowserRouter>
+    </SnackbarProvider>
   );
 }
 
