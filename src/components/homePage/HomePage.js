@@ -4,17 +4,18 @@ import chatBotLogo from "../../assets/chatBotLogo.png";
 import CardComponent from "../cardComponent/CardComponent";
 import SearchComponent from "../searchComponent/SearchComponent";
 import sampleData from "../sampleData/sampleData.json";
-import SideBar from "../sideBar/SideBar";
 
-const HomePage = () => {
+const HomePage = ({
+  chatList,
+  updatedChatList,
+  addNewChatClicked,
+  askBtnClicked,
+  setUpdatedChatList,
+  setAskBtnClick,
+  setChatList,
+}) => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState();
-  const [askBtnClicked, setAskBtnClick] = useState(false);
-  const [chatList, setChatList] = useState([]);
-  const [addNewChatClicked, setAddNewChatClicked] = useState(false);
-
-  //chatlist having like and dislike flag
-  const [updatedChatList, setUpdatedChatList] = useState([]);
 
   //update the chatlist with like and dislike flag initially as false
   useEffect(() => {
@@ -44,17 +45,16 @@ const HomePage = () => {
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const amPm = isAm ? "AM" : "PM";
     // Get date in dd/mm/yyyy format
-    const day = String(date.getDate()).padStart(2, '0'); 
-    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     const formattedDate = `${day}/${month}/${year}`;
-  
+
     return {
       time: `${hours}:${formattedMinutes} ${amPm}`,
       date: formattedDate,
     };
   };
-  
 
   //function to ask question
   function handleAskQuestion() {
@@ -94,7 +94,12 @@ const HomePage = () => {
       //update the chat list
       setChatList((prevChat) => [
         ...prevChat,
-        { question: question, answer: response, time: askedTime, date: askedDate },
+        {
+          question: question,
+          answer: response,
+          time: askedTime,
+          date: askedDate,
+        },
       ]);
       setAnswer(response);
       setQuestion("");
@@ -108,22 +113,13 @@ const HomePage = () => {
     localStorage.setItem("Saved Chats", JSON.stringify(updatedChatList));
   }
 
-  //function to start new chat when click on pencil icon
-  function handleAddNewChat() {
-    setAddNewChatClicked(true);
-    setAskBtnClick(false);
-    setChatList([]);
-    setUpdatedChatList([]);
-  }
-
   return (
     <Box sx={{ display: "flex" }}>
-      <SideBar handleAddNewChat={handleAddNewChat} />
       <Box
         sx={{
           background:
             "linear-gradient(180deg, rgba(215, 199, 244, 0.2) 0%, rgba(151, 133, 186, 0.2) 100%)",
-          width: { xs: "100%", sm: "85%", md: "85%" },
+          width: "100%",
         }}
       >
         {/* title of the application */}

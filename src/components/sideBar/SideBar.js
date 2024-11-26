@@ -24,9 +24,9 @@ const SideBar = (props) => {
   const SidebarContent = () => (
     <Box
       sx={{
-        width: isMobile ? "70vw" : "15%",
-        height: "100%",
-        backgroundColor: "#D7C7F4",
+        width: isMobile ? "70vw" : "19%",
+        height: "92vh",
+        backgroundColor: "#fff",
       }}
     >
       {/* icon and title here */}
@@ -36,6 +36,7 @@ const SideBar = (props) => {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "10px",
+          background:"#D7C7F4"
         }}
       >
         <img
@@ -57,7 +58,7 @@ const SideBar = (props) => {
       </Box>
 
       {/* all the previous conversations here */}
-      <Box sx={{ background: "#fff", padding: "10px" }}>
+      <Box sx={{ background: "#fff", padding: "10px", display:"flex", justifyContent:"Center" }}>
         <Link to='/past-conversations'>
         <Button
           variant="contained"
