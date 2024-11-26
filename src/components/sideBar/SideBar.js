@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { Box, Typography, Drawer, IconButton, useMediaQuery, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Drawer,
+  IconButton,
+  useMediaQuery,
+  Button,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu"; // Breadcrumb menu icon
 import chatBotLogo from "../../assets/chatBotLogo.png";
 import editImage from "../../assets/editImage.png";
 import PastConversation from "../pastConversations/PastConversations";
+import { Link } from "react-router-dom";
 
 const SideBar = (props) => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -14,9 +22,22 @@ const SideBar = (props) => {
   };
 
   const SidebarContent = () => (
-    <Box sx={{ width: isMobile ? "70vw" : "15%", height: "100%", backgroundColor: "#D7C7F4" }}>
+    <Box
+      sx={{
+        width: isMobile ? "70vw" : "15%",
+        height: "100%",
+        backgroundColor: "#D7C7F4",
+      }}
+    >
       {/* icon and title here */}
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "10px",
+        }}
+      >
         <img
           src={chatBotLogo}
           style={{ borderRadius: "50%" }}
@@ -36,9 +57,21 @@ const SideBar = (props) => {
       </Box>
 
       {/* all the previous conversations here */}
-      <Box sx={{background:"#fff", padding:"10px"}}>
-            <Button variant="contained" sx={{background:"#D7C7F4", color:"black", textTransform:"none", borderRadius:"10px"}}>Past conversations</Button>
-        </Box>
+      <Box sx={{ background: "#fff", padding: "10px" }}>
+        <Link to='/past-conversations'>
+        <Button
+          variant="contained"
+          sx={{
+            background: "#D7C7F4",
+            color: "black",
+            textTransform: "none",
+            borderRadius: "10px",
+          }}
+        >
+          Past conversations
+        </Button>
+        </Link>
+      </Box>
     </Box>
   );
 
