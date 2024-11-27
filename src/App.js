@@ -5,6 +5,7 @@ import PastConversation from "./components/pastConversations/PastConversations";
 import Layout from "./components/layout/Layout";
 import { useState } from "react";
 import { SnackbarProvider } from "notistack";
+import './App.css';
 
 // Wrapper component to use `useNavigate`
 const AppWithNavigation = () => {
@@ -13,7 +14,14 @@ const AppWithNavigation = () => {
   const [addNewChatClicked, setAddNewChatClicked] = useState(false);
   const [askBtnClicked, setAskBtnClick] = useState(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  const [isDark, setIsDark] = useState(false);
+
+  //fucntion to switch theme
+  function handleSwitchTheme() {
+    setIsDark(!isDark);
+  }
 
   // Function to start a new chat
   const handleAddNewChat = () => {
@@ -25,10 +33,10 @@ const AppWithNavigation = () => {
   };
 
   return (
-    <div className="App">
-      <TopBar />
+    <div className={isDark? "darkApp": ""} >
+      <TopBar handleSwitchTheme={handleSwitchTheme} isDark={isDark} />
       <Routes>
-        <Route element={<Layout handleAddNewChat={handleAddNewChat} />}>
+        <Route element={<Layout handleAddNewChat={handleAddNewChat} isDark={isDark} />}>
           <Route
             path="/"
             element={
@@ -43,7 +51,7 @@ const AppWithNavigation = () => {
               />
             }
           />
-          <Route path="/past-conversations" element={<PastConversation />} />
+          <Route path="/past-conversations" element={<PastConversation isDark={isDark} />} />
         </Route>
       </Routes>
     </div>
@@ -53,9 +61,9 @@ const AppWithNavigation = () => {
 function App() {
   return (
     <SnackbarProvider maxSnack={3}>
-    <BrowserRouter>
-      <AppWithNavigation /> 
-    </BrowserRouter>
+      <BrowserRouter>
+        <AppWithNavigation />
+      </BrowserRouter>
     </SnackbarProvider>
   );
 }

@@ -3,11 +3,11 @@ import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import SideBar from "../sideBar/SideBar";
 
-const Layout = ({ handleAddNewChat }) => {
+const Layout = ({ handleAddNewChat, isDark }) => {
   return (
     <Box sx={{ display: "flex" }}>
       {/* Sidebar remains constant */}
-      <SideBar handleAddNewChat={handleAddNewChat} />
+      <SideBar handleAddNewChat={handleAddNewChat} isDark={isDark} />
       {/* Dynamic content based on route */}
       <Box
         sx={{

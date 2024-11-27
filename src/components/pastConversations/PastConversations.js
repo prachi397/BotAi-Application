@@ -10,11 +10,10 @@ import React from "react";
 import userProfile from "../../assets/userProfile.png";
 import botAiLogo from "../../assets/chatBotLogo.png";
 import StarRating from "../starRating/StarRating";
-import editImage from "../../assets/editImage.png";
 import { Edit } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-const PastConversation = () => {
+const PastConversation = ({isDark}) => {
   const navigate = useNavigate();
 
   const pastConversations = JSON.parse(
@@ -72,13 +71,14 @@ const PastConversation = () => {
                   background: "#D7C7F421",
                   display: "flex",
                   alignItems: "flex-start",
+                  color: isDark?"white":""
                 }}
               >
                 <IconButton
                   onClick={() => handleEditConversation(group)}
                   aria-label="Edit Conversation"
                 >
-                  <Edit />
+                  <Edit style={{ color: isDark ? "white" : "" }}/>
                 </IconButton>
                 <CardContent>
                   {group?.chats?.map((chat, chatIdx) => (
@@ -148,7 +148,7 @@ const PastConversation = () => {
                         sx={{
                           fontSize: "12px",
                           marginTop: "13px",
-                          color: "#0000009E",
+                          color: isDark?"white":"#0000009E"
                         }}
                       >
                         {chat.time}

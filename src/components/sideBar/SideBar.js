@@ -7,10 +7,9 @@ import {
   useMediaQuery,
   Button,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu"; // Breadcrumb menu icon
+import MenuIcon from "@mui/icons-material/Menu"; 
 import chatBotLogo from "../../assets/chatBotLogo.png";
 import editImage from "../../assets/editImage.png";
-import PastConversation from "../pastConversations/PastConversations";
 import { Link } from "react-router-dom";
 
 const SideBar = (props) => {
@@ -26,7 +25,8 @@ const SideBar = (props) => {
       sx={{
         width: isMobile ? "70vw" : "19%",
         height: "92vh",
-        backgroundColor: "#fff",
+        backgroundColor: props.isDark ? "black" : "#fff",
+        color: props.isDark? "black": "",
       }}
     >
       {/* icon and title here */}
@@ -36,7 +36,7 @@ const SideBar = (props) => {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "10px",
-          background:"#D7C7F4"
+          background: "#D7C7F4",
         }}
       >
         <img
@@ -58,19 +58,26 @@ const SideBar = (props) => {
       </Box>
 
       {/* all the previous conversations here */}
-      <Box sx={{ background: "#fff", padding: "10px", display:"flex", justifyContent:"Center" }}>
-        <Link to='/past-conversations'>
-        <Button
-          variant="contained"
-          sx={{
-            background: "#D7C7F4",
-            color: "black",
-            textTransform: "none",
-            borderRadius: "10px",
-          }}
-        >
-          Past conversations
-        </Button>
+      <Box
+        sx={{
+          backgroundColor: props.isDark? "black": "#fff",
+          padding: "10px",
+          display: "flex",
+          justifyContent: "Center",
+        }}
+      >
+        <Link to="/past-conversations">
+          <Button
+            variant="contained"
+            sx={{
+              background: "#D7C7F4",
+              color: "black",
+              textTransform: "none",
+              borderRadius: "10px",
+            }}
+          >
+            Past conversations
+          </Button>
         </Link>
       </Box>
     </Box>
