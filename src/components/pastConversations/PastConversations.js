@@ -34,11 +34,25 @@ const PastConversation = () => {
         {Array.isArray(pastConversations) && pastConversations?.length > 0 ? (
           pastConversations?.map((group, groupIdx) => (
             <>
-              <Typography variant="h4" sx={{fontSize:"20px", mb:"10px", mt:"20px"}}>{group.chats[0].date}</Typography>
+              <Typography
+                variant="h4"
+                sx={{ fontSize: "20px", mb: "10px", mt: "20px" }}
+              >
+                {group.chats[0].date}
+              </Typography>
               <Card key={groupIdx} sx={{ background: "#D7C7F421" }}>
                 <CardContent>
                   {group?.chats?.map((chat, chatIdx) => (
-                    <Box key={chatIdx} sx={{display:"flex",flexDirection:"column",justifyContent:"center",gap:"10px", marginBottom: "20px" }}>
+                    <Box
+                      key={chatIdx}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        gap: "10px",
+                        marginBottom: "20px",
+                      }}
+                    >
                       <Box
                         sx={{
                           display: "flex",
@@ -58,6 +72,11 @@ const PastConversation = () => {
                           <span> {chat.question}</span>
                         </Typography>
                       </Box>
+                      <Box  sx={{
+                            "&:hover .hover-items": {
+                              display: "block",
+                            }
+                          }}>
                       <Box
                         sx={{
                           display: "flex",
@@ -72,12 +91,17 @@ const PastConversation = () => {
                           width={25}
                           style={{ borderRadius: "50%" }}
                         />
-                        <Typography variant="body2">
+                        <Typography
+                          variant="body2"
+                        >
                           <span style={{ fontWeight: "bold" }}>AI:</span>{" "}
                           <span> {chat.answer}</span>
                         </Typography>
                       </Box>
-                      <StarRating rating={chat.starRating} readOnly/>
+                      <Box className="hover-items" sx={{ display: "none",marginTop: "8px", }}>
+                      <StarRating rating={chat.starRating} readOnly />
+                      </Box>
+                      </Box>
                       <Typography
                         sx={{
                           fontSize: "12px",
