@@ -1,13 +1,32 @@
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import userProfile from "../../assets/userProfile.png";
 import botAiLogo from "../../assets/chatBotLogo.png";
 import StarRating from "../starRating/StarRating";
+import editImage from "../../assets/editImage.png";
+import { Edit } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const PastConversation = () => {
+  const navigate = useNavigate();
+
   const pastConversations = JSON.parse(
     localStorage.getItem("Saved Chats") || "[]"
   );
+
+  const handleEditConversation = (conversation) => {
+    // Save the selected conversation to localStorage or state
+    localStorage.setItem("SelectedChat", JSON.stringify(conversation));
+    // Redirect to the chat page
+    navigate("/");
+  };
 
   return (
     <Box
@@ -41,11 +60,26 @@ const PastConversation = () => {
                 {group.chats[0].date}
               </Typography>
               <Typography>
-                <span style={{fontWeight:"bold"}}>Ratings :</span>{" "}
-                <span style={{color: "#9785BA",}}>{group.overAllFeedbacks}</span>
-                </Typography>
-                <StarRating rating={group.overallRatings} readOnly/>
-              <Card key={groupIdx} sx={{ background: "#D7C7F421" }}>
+                <span style={{ fontWeight: "bold" }}>Ratings :</span>{" "}
+                <span style={{ color: "#9785BA" }}>
+                  {group.overAllFeedbacks}
+                </span>
+              </Typography>
+              <StarRating rating={group.overallRatings} readOnly />
+              <Card
+                key={groupIdx}
+                sx={{
+                  background: "#D7C7F421",
+                  display: "flex",
+                  alignItems: "flex-start",
+                }}
+              >
+                <IconButton
+                  onClick={() => handleEditConversation(group)}
+                  aria-label="Edit Conversation"
+                >
+                  <Edit />
+                </IconButton>
                 <CardContent>
                   {group?.chats?.map((chat, chatIdx) => (
                     <Box
@@ -77,35 +111,38 @@ const PastConversation = () => {
                           <span> {chat.question}</span>
                         </Typography>
                       </Box>
-                      <Box  sx={{
-                            "&:hover .hover-items": {
-                              display: "block",
-                            }
-                          }}>
                       <Box
                         sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "10px",
+                          "&:hover .hover-items": {
+                            display: "block",
+                          },
                         }}
                       >
-                        <img
-                          src={botAiLogo}
-                          alt="bot ai profile"
-                          height={25}
-                          width={25}
-                          style={{ borderRadius: "50%" }}
-                        />
-                        <Typography
-                          variant="body2"
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                          }}
                         >
-                          <span style={{ fontWeight: "bold" }}>AI:</span>{" "}
-                          <span> {chat.answer}</span>
-                        </Typography>
-                      </Box>
-                      <Box className="hover-items" sx={{ display: "none",marginTop: "8px", }}>
-                      <StarRating rating={chat.starRating} readOnly />
-                      </Box>
+                          <img
+                            src={botAiLogo}
+                            alt="bot ai profile"
+                            height={25}
+                            width={25}
+                            style={{ borderRadius: "50%" }}
+                          />
+                          <Typography variant="body2">
+                            <span style={{ fontWeight: "bold" }}>AI:</span>{" "}
+                            <span> {chat.answer}</span>
+                          </Typography>
+                        </Box>
+                        <Box
+                          className="hover-items"
+                          sx={{ display: "none", marginTop: "8px" }}
+                        >
+                          <StarRating rating={chat.starRating} readOnly />
+                        </Box>
                       </Box>
                       <Typography
                         sx={{

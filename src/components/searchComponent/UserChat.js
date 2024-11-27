@@ -6,7 +6,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import userProfile from "../../assets/userProfile.png";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
@@ -20,6 +20,24 @@ const UserChat = ({ updatedChatList, setUpdatedChatList, onChangeRating }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [starRatings, setStarRatings] = useState(false);
   const [rating, setRating] = useState(0);
+
+  useEffect(() => {
+    // Load the selected chat if it exists
+    const selectedChat = JSON.parse(localStorage.getItem("SelectedChat"));
+    // Get saved chats from local storage
+    const savedChats = JSON.parse(localStorage.getItem("Saved Chats")) || [];
+    // Filter out the chat with the same id as the selected chat
+    const updatedSavedChats = savedChats.filter(
+      (chat) => chat?.id !== selectedChat?.id
+    );
+    // Update local storage with the remaining chats
+    localStorage.setItem("Saved Chats", JSON.stringify(updatedSavedChats));
+
+    if (selectedChat) {
+      setUpdatedChatList(selectedChat.chats || []);
+      localStorage.removeItem("SelectedChat"); // Clear after loading
+    }
+  }, [setUpdatedChatList]);
 
   const handleLike = (index) => {
     setUpdatedChatList((prevChatList) =>
