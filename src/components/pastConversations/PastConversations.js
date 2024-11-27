@@ -40,6 +40,11 @@ const PastConversation = () => {
               >
                 {group.chats[0].date}
               </Typography>
+              <Typography>
+                <span style={{fontWeight:"bold"}}>Ratings :</span>{" "}
+                <span style={{color: "#9785BA",}}>{group.overAllFeedbacks}</span>
+                </Typography>
+                <StarRating rating={group.overallRatings} readOnly/>
               <Card key={groupIdx} sx={{ background: "#D7C7F421" }}>
                 <CardContent>
                   {group?.chats?.map((chat, chatIdx) => (
