@@ -248,5 +248,20 @@
       "id": 50,
       "question": "How do you stay updated with the latest technology trends?",
       "response": "Staying updated involves following industry news, participating in developer communities, attending conferences and workshops, taking online courses, reading technical blogs and publications, and experimenting with new technologies and tools."
+    },
+    {
+      "id": 51,
+      "question": "Hi",
+      "response": "Hi, How can I help you?"
+    },
+    {
+      "id": 52,
+      "question": "How are you?",
+      "response": "I am good, Thanks for asking. How are you?"
+    },
+    {
+      "id": 53,
+      "question": "I am good.",
+      "response": "That's great to hear. How can I help you?"
     }
   ]
