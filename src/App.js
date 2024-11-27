@@ -6,6 +6,7 @@ import Layout from "./components/layout/Layout";
 import { useState } from "react";
 import { SnackbarProvider } from "notistack";
 import './App.css';
+import AllFeedbacks from "./components/allFeedbacks/AllFeedbacks";
 
 // Wrapper component to use `useNavigate`
 const AppWithNavigation = () => {
@@ -52,6 +53,7 @@ const AppWithNavigation = () => {
             }
           />
           <Route path="/past-conversations" element={<PastConversation isDark={isDark} />} />
+          <Route path="/all-feedbacks" element={<AllFeedbacks isDark={isDark} />} />
         </Route>
       </Routes>
     </div>

@@ -64,6 +64,8 @@ const SideBar = (props) => {
           padding: "10px",
           display: "flex",
           justifyContent: "Center",
+          flexDirection:"column",
+          gap:"15px"
         }}
       >
         <Link to="/past-conversations">
@@ -77,6 +79,19 @@ const SideBar = (props) => {
             }}
           >
             Past conversations
+          </Button>
+        </Link>
+        <Link to="/all-feedbacks">
+          <Button
+            variant="contained"
+            sx={{
+              background: "#D7C7F4",
+              color: "black",
+              textTransform: "none",
+              borderRadius: "10px",
+            }}
+          >
+            All Feedbacks
           </Button>
         </Link>
       </Box>
