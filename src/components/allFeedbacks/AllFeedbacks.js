@@ -1,4 +1,14 @@
-import { Box, MenuItem, Select, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import {
+  Box,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 const AllFeedbacks = ({ isDark }) => {
@@ -6,12 +16,16 @@ const AllFeedbacks = ({ isDark }) => {
   const [filterRating, setFilterRating] = useState(""); // Default to All Ratings
 
   useEffect(() => {
-    const pastConversations = JSON.parse(localStorage.getItem("Saved Chats") || "[]");
+    const pastConversations = JSON.parse(
+      localStorage.getItem("Saved Chats") || "[]"
+    );
     setFilteredFeedbacks(pastConversations);
   }, []);
 
   const handleFilter = (rating) => {
-    const pastConversations = JSON.parse(localStorage.getItem("Saved Chats") || "[]");
+    const pastConversations = JSON.parse(
+      localStorage.getItem("Saved Chats") || "[]"
+    );
     if (rating === "") {
       setFilteredFeedbacks(pastConversations); // Show all feedbacks for "All Ratings"
     } else {
@@ -78,23 +92,45 @@ const AllFeedbacks = ({ isDark }) => {
       >
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }}>Conversation ID</TableCell>
-            <TableCell sx={{ fontWeight: "bold" }}>Feedback</TableCell>
-            <TableCell sx={{ fontWeight: "bold" }}>Rating</TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold", color: isDark ? "white" : "black" }}
+            >
+              Conversation ID
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold", color: isDark ? "white" : "black" }}
+            >
+              Feedback
+            </TableCell>
+            <TableCell
+              sx={{ fontWeight: "bold", color: isDark ? "white" : "black" }}
+            >
+              Rating
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {filteredFeedbacks.length > 0 ? (
             filteredFeedbacks.map((conversation) => (
               <TableRow key={conversation.id}>
-                <TableCell>{conversation.id}</TableCell>
-                <TableCell>{conversation.overAllFeedbacks}</TableCell>
-                <TableCell>{conversation.overallRatings}</TableCell>
+                <TableCell sx={{ color: isDark ? "white" : "black" }}>
+                  {conversation.id}
+                </TableCell>
+                <TableCell sx={{ color: isDark ? "white" : "black" }}>
+                  {conversation.overAllFeedbacks}
+                </TableCell>
+                <TableCell sx={{ color: isDark ? "white" : "black" }}>
+                  {conversation.overallRatings}
+                </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={3} align="center">
+              <TableCell
+                colSpan={3}
+                align="center"
+                sx={{ color: isDark ? "white" : "black" }}
+              >
                 No ratings available.
               </TableCell>
             </TableRow>
