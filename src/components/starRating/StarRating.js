@@ -1,7 +1,7 @@
 import React from "react";
 import { Rating } from "@mui/material";
 
-const StarRating = ({ rating, handleChange }) => {
+const StarRating = ({ rating, handleChange, className }) => {
 
   return (
     <div>
@@ -9,7 +9,7 @@ const StarRating = ({ rating, handleChange }) => {
         name="star-rating"
         value={rating}
         onChange={handleChange}
-        size="small" 
+        size={className!=="overall-ratings"? "small":"large"} 
         precision={0.5} 
       />
     </div>

@@ -4,6 +4,8 @@ import chatBotLogo from "../../assets/chatBotLogo.png";
 import CardComponent from "../cardComponent/CardComponent";
 import SearchComponent from "../searchComponent/SearchComponent";
 import sampleData from "../sampleData/sampleData.json";
+import OverallRatings from "../popUpModal/OverallRatings";
+import { useSnackbar } from "notistack";
 
 const HomePage = ({
   chatList,
@@ -13,9 +15,16 @@ const HomePage = ({
   setUpdatedChatList,
   setAskBtnClick,
   setChatList,
+  onChangeRating
 }) => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState();
+
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  const [overallRating, setOverallRating] = useState(0);
+  const [Overallfeedback, setOverAllFeedback] = useState("");
+
+  const { enqueueSnackbar } = useSnackbar();
 
   //update the chatlist with like, dislike flag and additional feedback initially as false
   useEffect(() => {
@@ -25,8 +34,8 @@ const HomePage = ({
           ...chat,
           like: false,
           dislike: false,
-          additionalFeedback: '',
-          starRating: 0
+          additionalFeedback: "",
+          starRating: 0,
         }))
       );
     }
@@ -110,20 +119,59 @@ const HomePage = ({
     }
   }
 
-  //fucntion to save the chats in local storage
+  //fucntion to open overall rating modal
   function handleChatSave() {
-    // Retrieve the existing saved chats from localStorage
-    const existingChats = JSON.parse(
-      localStorage.getItem("Saved Chats") || "[]"
-    );
-    // Create a new group for the current chat session
-    const newChatGroup = {
-      id: Date.now(), // Unique ID for the group (timestamp)
-      chats: [...updatedChatList], // Store the updated chat list in this group
-    };
-    // Append the new group to the existing groups
-    const updatedGroups = [...existingChats, newChatGroup];
-    localStorage.setItem("Saved Chats", JSON.stringify(updatedGroups));
+    setIsRatingModalOpen(true);
+  }
+
+  //function to close modal
+  function handleRatingModalClose() {
+    setIsRatingModalOpen(false);
+    setOverallRating(0);
+    setOverAllFeedback("");
+  }
+
+  //function to set overall star ratings for a particular chat
+  const handleAddStars = (event, newValue) => {
+    setOverallRating(newValue);
+    if (onChangeRating) {
+      onChangeRating(newValue);
+    }
+  };
+
+  //function to submit ratings
+  function handleRatingModalSubmit() {
+    if (overallRating > 0 && Overallfeedback.length > 0) {
+      // Retrieve the existing saved chats from localStorage
+      const existingChats = JSON.parse(localStorage.getItem("Saved Chats") || "[]");
+  
+      // Create a new group for the current chat session
+      const newChatGroup = {
+        id: Date.now(), // Unique ID for the group (timestamp)
+        overallRatings: overallRating, // Overall ratings for a particular chat
+        overAllFeedbacks: Overallfeedback,
+        chats: [...updatedChatList], // Store the updated chat list in this group
+      };
+  
+      // Append the new group to the existing groups
+      const updatedGroups = [...existingChats, newChatGroup];
+      localStorage.setItem("Saved Chats", JSON.stringify(updatedGroups));
+  
+      // Show a success notification
+      enqueueSnackbar("Chat Saved", {
+        variant: "success",
+      });
+  
+      // Reset rating and feedback
+      setOverallRating(0);
+      setOverAllFeedback("");
+      // Close the modal
+      setIsRatingModalOpen(false);
+    } else {
+      enqueueSnackbar("Please provide a rating and feedback before saving.", {
+        variant: "error",
+      });
+    }
   }
 
   return (
@@ -199,6 +247,17 @@ const HomePage = ({
             handleUserTyping={handleUserTyping}
             handleAskQuestion={handleAskQuestion}
             handleChatSave={handleChatSave}
+          />
+
+          {/* open overall rating modal */}
+          <OverallRatings
+            isRatingModalOpen={isRatingModalOpen}
+            handleRatingModalClose={handleRatingModalClose}
+            overallRating={overallRating}
+            handleAddStars={handleAddStars}
+            handleRatingModalSubmit={handleRatingModalSubmit}
+            Overallfeedback={Overallfeedback}
+            setOverallFeedback={setOverAllFeedback}
           />
         </Box>
       </Box>
